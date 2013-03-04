@@ -10,7 +10,7 @@ Strophe.addConnectionPlugin('easyxdm', {
                     this.readyState = 1;
             };
             this.send = function(body) {
-                this.readyState = 4;
+                this.readyState = 2;
                 Gt.ApiRpc.strophe_request({
                     type:self._method,
                     url:self._url,
@@ -21,9 +21,7 @@ Strophe.addConnectionPlugin('easyxdm', {
                     self.responseXML = $.parseXML( xdmdata.responseText );
                     self.status = xdmdata.status;
                     self.readyState=4;
-                    if(self.onreadystatechange!=null) {
-                        self.onreadystatechange();
-                    }
+                    self.onreadystatechange();
                 },function(xdmdata) {
                     self.responseText = xdmdata.responseText;
                     self.responseXML = $.parseXML( xdmdata.responseText );
@@ -33,6 +31,9 @@ Strophe.addConnectionPlugin('easyxdm', {
                         self.onreadystatechange();
                     }
                 });
+            };
+            this.abort = function() {
+
             };
             this.onreadystatechange = null;
             this.responseText = null;
@@ -46,5 +47,6 @@ Strophe.addConnectionPlugin('easyxdm', {
             xhr.onreadystatechange = this.func.bind(null, this);
             return xhr;
         };
+     
     }
 });
